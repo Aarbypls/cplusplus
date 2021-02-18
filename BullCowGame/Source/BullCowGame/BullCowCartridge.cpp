@@ -26,6 +26,11 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
     }
     else
     {
+        if (Input.Len() != HiddenWord.Len())
+        {
+            PrintLine(TEXT("The Hidden Word is 4 characters long, try again!")); // magic number - remove
+        }
+
         PrintLine(TEXT("You have lost!"));
     }
 

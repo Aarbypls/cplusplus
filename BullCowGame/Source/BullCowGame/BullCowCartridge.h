@@ -20,6 +20,4 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 	private:
 	FString HiddenWord;
 	int32 Lives;
-
-	
 };
