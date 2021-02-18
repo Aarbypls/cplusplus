@@ -24,8 +24,8 @@ You win after solving 5 sequential puzzles.
 ## Authors
 
 Aaron Grossman
-https://www.linkedin.com/in/grossmanmaaron/
-gross614@umn.edu
+* https://www.linkedin.com/in/grossmanmaaron/
+* gross614@umn.edu
 
 Created as part of the Unreal Engine C++ Developer course on Udemy:
 https://www.udemy.com/course/unrealcourse/
