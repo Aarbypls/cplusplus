@@ -23,8 +23,8 @@ You win after solving 5 sequential puzzles.
 
 ## Authors
 
-Aaron Grossman\n
-https://www.linkedin.com/in/grossmanmaaron/\n
+Aaron Grossman
+https://www.linkedin.com/in/grossmanmaaron/
 gross614@umn.edu
 
 Created as part of the Unreal Engine C++ Developer course on Udemy:
