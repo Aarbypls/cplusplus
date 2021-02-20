@@ -6,11 +6,18 @@
 void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
+    
+    // Load all words from the HiddenWordList txt file and set them to an array
     const FString WordListPath = FPaths::ProjectContentDir() / TEXT("WordLists/HiddenWordList.txt");
     FFileHelper::LoadFileToStringArray(Words, *WordListPath);
 
+    // Check that words are 1) isograms, 2) between 4 and 8 letters long, inclusive
+    TArray<FString> ValidWords = GetValidWords(Words);    
+
     SetupGame();
 
+    PrintLine(TEXT("The number of possible words is: %i."), Words.Num());
+    PrintLine(TEXT("The number of valid words is: %i."), ValidWords.Num());
     PrintLine(TEXT("The HiddenWord is: %s."), *HiddenWord); // debug line
 }
 
@@ -38,7 +45,7 @@ void UBullCowCartridge::SetupGame()
 
     PrintLine(TEXT("Guess the %i letter word."), HiddenWord.Len());
     PrintLine(TEXT("You have %i lives."), Lives);
-    PrintLine(TEXT("Type in your guess and\npress ENTER to continue."));
+    PrintLine(TEXT("Type your guess, then ENTER to continue."));
 }
 
 void UBullCowCartridge::EndGame()
@@ -97,12 +104,6 @@ void UBullCowCartridge::ProcessGuess(FString Guess)
 
 bool UBullCowCartridge::IsIsogram(FString Word) const
 {
-    // One letter words are by definition isograms   
-    if (Word.Len() == 1)
-    {
-        return true;
-    }
-
     // Iterate through, checking each letter against the others for duplicates
     for (int32 Index = 0; Index < Word.Len() - 1; Index++)
     {
@@ -116,4 +117,21 @@ bool UBullCowCartridge::IsIsogram(FString Word) const
     }
 
     return true;
+}
+
+TArray<FString> UBullCowCartridge::GetValidWords(TArray<FString> WordList) const
+{
+    TArray<FString> ValidWords;
+
+    for (FString Word : WordList)
+    {
+        if (Word.Len() >= 4 &&
+            Word.Len() <= 8 &&
+            IsIsogram(Word))
+        {
+            ValidWords.Emplace(Word);
+        }
+    }
+
+    return ValidWords;
 }
