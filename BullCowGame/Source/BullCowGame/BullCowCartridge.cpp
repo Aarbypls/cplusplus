@@ -26,13 +26,14 @@ void UBullCowCartridge::OnInput(const FString& PlayerInput) // When the player h
     }
     else
     {
+        ClearScreen();        
         ProcessGuess(PlayerInput);
     }
 }
 
 void UBullCowCartridge::SetupGame()
 {
-    // welcome the player
+    // Welcome the player
     PrintLine(TEXT("Welcome to the Bull Cows game!"));
 
     HiddenWord = Isograms[FMath::RandRange(0, Isograms.Num() - 1)];
@@ -42,8 +43,10 @@ void UBullCowCartridge::SetupGame()
     PrintLine(TEXT("Guess the %i letter word."), HiddenWord.Len());
     PrintLine(TEXT("You have %i lives."), Lives);
     PrintLine(TEXT("Type your guess, then ENTER to continue."));
+    PrintLine(TEXT("Bulls = right letter in right spot\nCows = right letter in wrong spot"));
 
-    PrintLine(TEXT("The HiddenWord is: %s."), *HiddenWord); // debug line - COMMENT OUT
+    // DEBUG LINE - COMMENT OUT
+    // PrintLine(TEXT("The HiddenWord is: %s."), *HiddenWord); 
 }
 
 void UBullCowCartridge::EndGame()
@@ -65,8 +68,6 @@ void UBullCowCartridge::EndGame()
 
 void UBullCowCartridge::ProcessGuess(const FString& Guess)
 {
-    // TO DO: validate hidden word IF they don't add it in
-
     if (Guess == HiddenWord)
     {
         ClearScreen();
@@ -88,16 +89,20 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
 
     // Incorrect guess; remove a life
     PrintLine(TEXT("That guess was incorrect. You lost a life!"));
-    PrintLine(TEXT("%i lives remaining."), --Lives);
+    --Lives;
 
     if (Lives <= 0)
     {
         ClearScreen();
         EndGame();
         return;
-        // Play again or quit    
-        // Prompt PlayAgain, Press Enter -> PlayAgain?
     }
+
+    FBullCowCount Score = GetBullCows(Guess);
+
+    PrintLine(TEXT("You have %i Bulls and %i Cows."), Score.Bulls, Score.Cows);
+
+    PrintLine(TEXT("%i lives remaining."), Lives);
 }
 
 bool UBullCowCartridge::IsIsogram(const FString& Word) const
@@ -132,4 +137,31 @@ TArray<FString> UBullCowCartridge::GetValidWords(const TArray<FString>& WordList
     }
 
     return ValidWords;
+}
+
+FBullCowCount UBullCowCartridge::GetBullCows(const FString& Guess) const
+{
+    // Bulls = correct letter in correct spot
+    // Cows = correct letter in wrong spot
+    FBullCowCount Count;
+
+    for (int32 GuessIndex = 0; GuessIndex < Guess.Len(); GuessIndex++)
+    {
+        if (Guess[GuessIndex] == HiddenWord[GuessIndex])
+        {
+            Count.Bulls++;
+            continue;
+        }
+
+        for (int32 ComparisonIndex = 0; ComparisonIndex < HiddenWord.Len(); ComparisonIndex++)
+        {
+            if (Guess[GuessIndex] == HiddenWord[ComparisonIndex])
+            {
+                Count.Cows++;
+                break;
+            }
+        }       
+    }
+    
+    return Count;
 }
