@@ -37,5 +37,11 @@ private:
 	void SetupInputComponent();
 
 	// Return the first Actor within reach with a physics body
-	FHitResult GetFirstPhysicsBodyInReach() const;
+	FHitResult GetFirstPhysicsBodyInReach();
+
+	// Return the location of the object to grab based on player's location, rotation, and reach
+	FVector GetObjectToGrabLocation() const;
+
+	// Get player's position in the world
+	FVector GetPlayersWorldLocation() const;
 };
