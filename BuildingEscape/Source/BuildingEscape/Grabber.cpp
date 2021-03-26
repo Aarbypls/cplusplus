@@ -25,7 +25,6 @@ void UGrabber::BeginPlay()
 	SetupInputComponent();
 }
 
-// Check for UInputComponent
 void UGrabber::SetupInputComponent()
 {
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();

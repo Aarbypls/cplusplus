@@ -26,12 +26,18 @@ public:
 	void OpenDoor(float DeltaTime);
 	void CloseDoor(float DeltaTime);
 	float TotalMassOfActors() const;
+	void CheckForPressurePlate();
+	void FindAudioComponent();
 
 private:
 
 	float InitialYaw;
 	float CurrentYaw;
 	float DoorLastOpened = 0.f;
+
+	// Tracks whether the sound has been played
+	bool PlayOpenSound = true;
+	bool PlayCloseSound = false;
 
 	UPROPERTY(EditAnywhere)
 	float OpenAngle = 90.f;
@@ -46,8 +52,11 @@ private:
 	float DoorCloseInterpSpeed = 4.f;
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* PressurePlate;
+	float MassToOpen = 50.f;
 
 	UPROPERTY(EditAnywhere)
-	float MassToOpen = 50.f;
+	ATriggerVolume* PressurePlate = nullptr;
+
+	UPROPERTY()
+	UAudioComponent* AudioComponent = nullptr;
 };
