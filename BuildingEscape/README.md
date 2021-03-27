@@ -7,11 +7,17 @@ Building Escape is a very simple demo / test scene for 3D development in Unreal.
 The scene was created in order to test basic scripting in Unreal; all of the functionality of the scene has been scripted in C++. 
 
 Building Escape uses the following concepts, all on a VERY basic level:
+
 	* Lighting
+	
 	* Materials and Textures
+	
 	* Trigger & Collision Volumes
+	
 	* Raycasting
+	
 	* Audio & Physics Components
+	
 
 The right mouse button is used for picking up objects in the scene, which is necessary to complete the small puzzle.
 
