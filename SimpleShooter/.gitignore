@@ -85,4 +85,5 @@ VSCode Files
 BuildingEscape.code-workspace
 
 *.uasset
+*.umap
 
